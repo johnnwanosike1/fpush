@@ -152,9 +152,18 @@ impl PushTrait for FpushFcm {
 
 #[inline(always)]
 fn create_push_message(token: String) -> Message {
+    let mut data = HashMap::new();
+    data.insert("push_type".to_string(), "message".to_string());
+    data.insert("timestamp".to_string(), chrono::Utc::now().timestamp().to_string());
+
     Message {
-        data: Some(HashMap::new()),
+        data: Some(data),
         token: Some(token),
+        android: Some(google_fcm1::api::AndroidConfig {
+            priority: Some("HIGH".to_string()),
+            ..Default::default()
+        }),
         ..Default::default()
     }
 }
+
