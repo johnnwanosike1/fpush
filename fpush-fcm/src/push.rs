@@ -160,7 +160,18 @@ fn create_push_message(token: String) -> Message {
         data: Some(data),
         token: Some(token),
         android: Some(google_fcm1::api::AndroidConfig {
-            priority: Some("HIGH".to_string()),
+            priority: Some("high".to_string()),
+            notification: Some(google_fcm1::api::AndroidNotification {
+                channel_id: Some("messages".to_string()),
+                notification_priority: Some("PRIORITY_HIGH".to_string()),
+                visibility: Some("PUBLIC".to_string()),
+                ..Default::default()
+            }),
+            ..Default::default()
+        }),
+        notification: Some(google_fcm1::api::Notification {
+            title: Some("New message".to_string()),
+            body: Some("You have a new message".to_string()),
             ..Default::default()
         }),
         ..Default::default()
